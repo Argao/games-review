@@ -2,7 +2,7 @@
 /node_modules
 /public/build
 /public/hot
-#/public/storage
+/public/storage
 /storage/*.key
 /vendor
 .env
@@ -20,5 +20,5 @@ yarn-error.log
 /.vscode
 
 # Project exclude paths
-/storage/app/
+#/storage/app/
 /storage/framework/
