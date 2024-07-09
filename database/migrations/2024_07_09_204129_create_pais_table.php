@@ -14,8 +14,8 @@ return new class extends Migration
         Schema::create('paises', function (Blueprint $table) {
             $table->id();
             $table->timestamps();
-            $table->string('nome',30);
-            $table->string('sigla',5);
+            $table->string('nome',30)->unique();
+            $table->string('sigla',5)->unique();
         });
         Schema::table('produtoras', function (Blueprint $table){
             $table->unsignedBigInteger('pais_id');
