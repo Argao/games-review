@@ -7,5 +7,12 @@ use Illuminate\Database\Eloquent\Model;
 
 class Genero extends Model
 {
+
+
     use HasFactory;
+
+    public function jogo()
+    {
+        $this->hasMany(Jogo::class);
+    }
 }
