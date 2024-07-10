@@ -8,6 +8,7 @@
     <link rel="stylesheet" href="{{asset('css/basico.css')}}">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200"/>
     <title>@yield('titulo')</title>
+
 </head>
 <body>
 
@@ -18,5 +19,7 @@
     <footer>
         @include('layouts._partials.footer')
     </footer>
+    @vite(['resources/js/app.js'])
+    <script src="{{asset('js/view.js')}}"></script>
 </body>
 </html>

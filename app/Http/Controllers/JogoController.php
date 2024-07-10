@@ -114,9 +114,15 @@ class JogoController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id)
+    public function destroy(Jogo $jogo)
     {
+        $caminhoImagem = public_path('img/' . $jogo->capa);
+        if (file_exists($caminhoImagem)) {
+            unlink($caminhoImagem);
+        }
 
+        $jogo->delete();
+        return redirect()->route('jogo.index');
     }
 
     public static function verificaCapa(Jogo $jogo)
