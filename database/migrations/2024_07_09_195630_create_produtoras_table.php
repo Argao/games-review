@@ -14,7 +14,7 @@ return new class extends Migration
         Schema::create('produtoras', function (Blueprint $table) {
             $table->id();
             $table->timestamps();
-            $table->string('produtora')->unique();
+            $table->string('produtora',50)->unique();
         });
     }
 

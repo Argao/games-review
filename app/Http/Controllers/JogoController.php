@@ -151,6 +151,11 @@ class JogoController extends Controller
         if ($request->hasFile('capa')) {
             $imageName = time().'.'.$request->capa->extension();
             $request->capa->move(public_path('img'), $imageName);
+            $caminhoImagem = public_path('img/' . $jogo->capa);
+
+            if (file_exists($caminhoImagem)) {
+                unlink($caminhoImagem);
+            }
             $jogo->capa = $imageName;
         }
 
