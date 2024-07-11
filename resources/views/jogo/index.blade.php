@@ -35,7 +35,7 @@
                 @if(true)
                     <td>
                         <a href='{{route('jogo.create')}}'><span class='material-symbols-outlined'>add_circle</span></a>
-                        <a href=''><span class='material-symbols-outlined'>edit</span></a>
+                        <a href='{{route('jogo.edit',$jogo)}}'><span class='material-symbols-outlined'>edit</span></a>
                         <form id="delete_{{$jogo->id}}" action="{{ route('jogo.destroy', $jogo) }}" method="post">
                             @csrf
                             @method('delete')

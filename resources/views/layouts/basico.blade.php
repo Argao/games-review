@@ -19,7 +19,6 @@
     <footer>
         @include('layouts._partials.footer')
     </footer>
-    @vite(['resources/js/app.js'])
     <script src="{{asset('js/view.js')}}"></script>
 </body>
 </html>
