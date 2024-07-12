@@ -22,7 +22,7 @@ class ProdutoraController extends Controller
     public function create()
     {
         $paises = Pais::all();
-        return view('produtora.create', ['paises' => $paises]);
+        return view('app.produtora.create', ['paises' => $paises]);
     }
 
     /**

@@ -4,8 +4,6 @@
 
 @section('conteudo')
 
-
-
     <h1>Escolha seu jogo</h1>
     <form action="" method="get" id="busca" autocomplete="on">
         Ordenar:
@@ -31,25 +29,13 @@
                 <td>
                    {{ number_format($jogo->nota,1)}} / 10.0
                 </td>
-
-                @if(true)
-                    <td>
-                        <a href='{{route('jogo.create')}}'><span class='material-symbols-outlined'>add_circle</span></a>
-                        <a href='{{route('jogo.edit',$jogo)}}'><span class='material-symbols-outlined'>edit</span></a>
-                        <form id="delete_{{$jogo->id}}" action="{{ route('jogo.destroy', $jogo) }}" method="post">
-                            @csrf
-                            @method('delete')
-                            <button  onclick="confirmaDelete({{ $jogo->id }})" class='material-symbols-outlined'>delete</button>
-                        </form>
-                    </td>
-                @endif
             </tr>
         @endforeach
     </table>
 
 
     <div >
-        {{$jogos->appends($request)->links('pagination::bootstrap-4')}}
+        {{$jogos->appends($request->all())->links('pagination::bootstrap-4')}}
         <br>
         Exibindo {{$jogos->count()}} jogos de {{$jogos->total()}} (de {{$jogos->firstItem()}}
         a {{$jogos->lastItem()}})

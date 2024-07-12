@@ -20,7 +20,7 @@ class UsuarioController extends Controller
      */
     public function create()
     {
-        return view('usuario.create');
+        return view('sistema.usuario.create');
     }
 
     /**
@@ -32,7 +32,7 @@ class UsuarioController extends Controller
         $regras = [
             'nome' => 'required|min:3|max:100',
             'usuario' => 'required',
-            'senha' => ['required', 'min:6', 'max:20', 'regex:/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[\W_]).+$/'],
+            'senha' => ['required', 'min:6', 'max:20'],
         ];
 
         $feedback = [
@@ -42,7 +42,6 @@ class UsuarioController extends Controller
             'nome.max' => 'O campo nome deve ter no máximo 100 caracteres',
             'senha.min' => 'A senha deve ter no mínimo 6 caracteres',
             'senha.max' => 'A senha deve ter no máximo 20 caracteres',
-            'senha.regex' => 'A senha deve conter pelo menos uma letra maiúscula, uma minúscula, um número e um caractere especial',
         ];
 
         $request->validate($regras, $feedback);

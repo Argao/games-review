@@ -15,7 +15,7 @@ class JogoController extends Controller
     public function index(Request $request)
     {
         $jogos = Jogo::paginate(10);
-        return view('jogo.index',['jogos' => $jogos,'request'=>$request->all()]);
+        return view('index',['jogos' => $jogos,'request'=>$request->all()]);
     }
 
     /**
@@ -25,7 +25,7 @@ class JogoController extends Controller
     {
         $generos = Genero::all();
         $produtoras = Produtora::all();
-        return view('jogo.create',['generos' => $generos, 'produtoras' => $produtoras]);
+        return view('sistema.jogo.create',['generos' => $generos, 'produtoras' => $produtoras]);
     }
 
     /**
@@ -92,7 +92,7 @@ class JogoController extends Controller
         //verifica se a imagem da capa existe
         $imagem = $this->verificaCapa($jogo);
 
-        return view('jogo.show',['jogo' => $jogo,'capa' => $imagem]);
+        return view('app.jogo.show',['jogo' => $jogo,'capa' => $imagem]);
     }
 
     /**
@@ -102,7 +102,7 @@ class JogoController extends Controller
     {
         $generos = Genero::all();
         $produtoras = Produtora::all();
-        return view('jogo.edit',['jogo' => $jogo, 'generos' => $generos, 'produtoras' => $produtoras]);
+        return view('app.jogo.edit',['jogo' => $jogo, 'generos' => $generos, 'produtoras' => $produtoras]);
     }
 
     /**

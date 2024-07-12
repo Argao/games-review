@@ -18,10 +18,12 @@ class LoginController extends Controller
                 break;
             case 2:
                 $erro = 'Necessário realizar login para ter acesso a página';
+            case 3:
+                $erro = 'Usuário não tem permissão para acessar a página';
                 break;
         }
 
-        return view('site.login',['titulo' => 'Login', 'erro' => $erro]);
+        return view('login',['titulo' => 'Login', 'erro' => $erro]);
     }
 
     public function autenticar(Request $request)
@@ -42,23 +44,25 @@ class LoginController extends Controller
 
         //recuperamos os parâmetros do formulário
         $usuario = $request->get('usuario');
-        $senha = $request->get('senha');
+        $senha =$request->get('senha');
+
 
 
         //iniciar Model User
         $user = new Usuario();
 
-        $usuario = $user->where('usuario', $usuario)->where('senha',$senha)->get()->first();
+        $usuario = $user->where('usuario', $usuario)->get()->first();
 
-        if(isset($usuario->nome)){
+
+        if(UsuarioController::testarHash($senha, $usuario->senha)){
 
             $_SESSION['nome'] = $usuario->nome;
-            $_SESSION['email'] = $usuario->usuario;
+            $_SESSION['usuario'] = $usuario->usuario;
             $_SESSION['tipo'] = $usuario->tipo;
 
             return redirect()->route('jogo.index');
         }else{
-            return redirect()->route('site.login',['erro' => 1]);
+            return redirect()->route('login');
         }
 
     }

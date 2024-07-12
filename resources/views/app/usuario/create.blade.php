@@ -4,6 +4,6 @@
 
 @section('conteudo')
     <h1>Novo Usuario</h1>
-    @component('usuario._components.form_create_edit_usuario')
+    @component('app.usuario._components.form_create_edit_usuario')
     @endcomponent
 @endsection
