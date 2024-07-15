@@ -20,7 +20,6 @@
         <input type="password" name="senha" id="senha">
         <button type="submit">Entrar</button>
     </form>
-
 </main>
 <footer>
     @include('layouts._partials.footer')

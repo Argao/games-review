@@ -15,7 +15,7 @@ class JogoController extends Controller
     public function index(Request $request)
     {
         $jogos = Jogo::paginate(10);
-        return view('index',['jogos' => $jogos,'request'=>$request->all()]);
+        return view('index',['jogos' => $jogos,'request'=>$request]);
     }
 
     /**
@@ -92,7 +92,7 @@ class JogoController extends Controller
         //verifica se a imagem da capa existe
         $imagem = $this->verificaCapa($jogo);
 
-        return view('app.jogo.show',['jogo' => $jogo,'capa' => $imagem]);
+        return view('jogo_detalhes',['jogo' => $jogo,'capa' => $imagem]);
     }
 
     /**

@@ -20,7 +20,7 @@ class UsuarioController extends Controller
      */
     public function create()
     {
-        return view('sistema.usuario.create');
+        return view('app.usuario.create');
     }
 
     /**
@@ -32,7 +32,10 @@ class UsuarioController extends Controller
         $regras = [
             'nome' => 'required|min:3|max:100',
             'usuario' => 'required',
-            'senha' => ['required', 'min:6', 'max:20'],
+            'senha' => 'required|min:6|max:20',
+            'senha_confirmation' => 'required|same:senha',
+            'tipo' => 'required'
+
         ];
 
         $feedback = [
@@ -42,6 +45,8 @@ class UsuarioController extends Controller
             'nome.max' => 'O campo nome deve ter no máximo 100 caracteres',
             'senha.min' => 'A senha deve ter no mínimo 6 caracteres',
             'senha.max' => 'A senha deve ter no máximo 20 caracteres',
+            'senha_confirmation.same' => 'As senhas não são iguais',
+            'tipo.required' => 'O campo tipo deve ser preenchido'
         ];
 
         $request->validate($regras, $feedback);
@@ -51,12 +56,13 @@ class UsuarioController extends Controller
         echo $senha;
 
         Usuario::create([
-            'nome' => $request->get('nome'),
-            'usuario' => $request->get('usuario'),
-            'senha' => $senha
+            'nome' => $request->input('nome'),
+            'usuario' => $request->input('usuario'),
+            'senha' => $senha,
+            'tipo' => $request->input('tipo')
         ]);
 
-        return redirect()->route('jogo.index');
+        return view('index');
     }
 
 

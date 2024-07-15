@@ -18,10 +18,12 @@ class LoginController extends Controller
                 break;
             case 2:
                 $erro = 'Necessário realizar login para ter acesso a página';
+                break;
             case 3:
                 $erro = 'Usuário não tem permissão para acessar a página';
                 break;
         }
+
 
         return view('login',['titulo' => 'Login', 'erro' => $erro]);
     }
@@ -53,6 +55,9 @@ class LoginController extends Controller
 
         $usuario = $user->where('usuario', $usuario)->get()->first();
 
+        if(!$usuario){
+            return redirect()->route('login', ['erro' => 1]);
+        }
 
         if(UsuarioController::testarHash($senha, $usuario->senha)){
 
@@ -61,15 +66,16 @@ class LoginController extends Controller
             $_SESSION['tipo'] = $usuario->tipo;
 
             return redirect()->route('jogo.index');
-        }else{
-            return redirect()->route('login');
         }
+
+        return redirect()->route('login', ['erro' => 1]);
+
 
     }
 
     public function sair()
     {
         session_destroy();
-        return redirect()->route('jogo.index');
+        return redirect()->route('home');
     }
 }
