@@ -9,42 +9,45 @@ class HomeController extends Controller
 {
     public function index(Request $request)
     {
+        //inicia a sessão
         session_start();
-//        $filtro = $request->input('filtro');//filtro de busca
-//        $busca = $request->input('busca');//string a ser buscada
-//
-//
-//
-//        $query = Jogo::join('generos', 'jogos.genero_id', '=', 'generos.id')
-//            ->join('produtoras', 'jogos.produtora_id', '=', 'produtoras.id');
-//
-//
-//        // Conditional search
-//        if (!empty($busca)) {
-//            $query->where(function($query) use ($busca) {
-//                $query->where('jogos.nome', 'like', "%$busca%")
-//                    ->orWhere('produtoras.produtora', 'like', "%$busca%")
-//                    ->orWhere('generos.genero', 'like', "%$busca%");
-//            });
-//        }
-//
-//        switch ($filtro) {
-//            case "p":
-//                $query->orderBy('produtoras.produtora');
-//                break;
-//            case "n1":
-//                $query->orderByDesc('jogos.nota');
-//                break;
-//            case "n2":
-//                $query->orderBy('jogos.nota');
-//                break;
-//            default:
-//                $query->orderBy('jogos.nome');
-//                break;
-//        }
 
-        // Execute the query
-        $jogos = Jogo::paginate(10);
+        //recupera o filtro e a busca
+        $filtro = $request->input('filtro');//filtro de busca
+        $busca = $request->input('busca');//string a ser buscada
+
+        //cria a query
+        $query = Jogo::select('jogos.*')
+        ->join('generos', 'jogos.genero_id', '=', 'generos.id')
+            ->join('produtoras', 'jogos.produtora_id', '=', 'produtoras.id');
+
+
+        if (!empty($busca)) {
+            $query->where(function($query) use ($busca) {
+                $query->where('jogos.nome', 'like', "%$busca%")
+                    ->orWhere('produtoras.produtora', 'like', "%$busca%")
+                    ->orWhere('generos.genero', 'like', "%$busca%");
+            });
+        }
+
+        switch ($filtro) {
+            case "n":
+                $query->orderBy('jogos.nome');
+                break;
+            case "p":
+                $query->orderBy('produtoras.produtora');
+                break;
+            case "n1":
+                $query->orderByDesc('jogos.nota');
+                break;
+            case "n2":
+                $query->orderBy('jogos.nota');
+                break;
+            default:
+                break;
+        }
+
+        $jogos = $query->paginate(10);
 
         return view('index', ['jogos' => $jogos,'request' => $request]);
     }

@@ -5,15 +5,15 @@
 @section('conteudo')
 {{--    {{session_destroy()}}--}}
     <h1>Escolha seu jogo</h1>
-    <form action="{{route('home')}}" method="get" id="busca" autocomplete="on">
+    <form action="{{ route('home',['filtro' => $request->filtro]) }}" method="get" id="busca" autocomplete="on">
         Ordenar:
-        <a href="">Nome |</a>
-        <a href="">Produtora |</a>
-        <a href="">Nota Alta |</a>
-        <a href="">Nota Baixa | </a>
-        <a href="">Mostrar Todos |</a>
+        <a href="{{route('home',['filtro' => 'n','busca' => $request->busca])}}">Nome |</a>
+        <a href="{{route('home',['filtro' => 'p','busca' => $request->busca])}}">Produtora |</a>
+        <a href="{{route('home',['filtro' => 'n1','busca' => $request->busca])}}">Nota Alta | </a>
+        <a href="{{route('home',['filtro' => 'n2','busca' => $request->busca])}}">Nota Baixa | </a>
+        <a href="{{route('home',['filtro' => 'all','busca' => $request->busca])}}">Mostrar Todos |</a>
         <label for="busca_txt">Buscar:</label>
-        <input type="text" name="busca" id="busca_txt" size="10" maxlength="40" autocomplete="on">
+        <input type="text" name="busca" id="busca_txt" value="{{$request->busca}}" size="10" maxlength="40" autocomplete="on">
         <input type="submit" value="Ok">
     </form>
 

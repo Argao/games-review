@@ -5,6 +5,7 @@ use App\Http\Controllers\JogoController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/','App\Http\Controllers\HomeController@index')->name('home');
+Route::post('/','App\Http\Controllers\HomeController@index')->name('home');
 
 Route::get('/detalhes/{jogo}','App\Http\Controllers\HomeController@detalhes')->name('home.detalhes');
 
