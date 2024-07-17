@@ -1,4 +1,3 @@
-
 @charset "UTF-8";
 body {
     font-family: Arial, sans-serif;
@@ -88,12 +87,19 @@ header {
     gap: 0.5em;
 }
 
-.actions button {
+.actions button , .actions a, .actions form , .actions input {
     border: none;
     background-color: transparent;
     cursor: pointer;
     font-size: 1.2em;
 }
+
+.actions a {
+    text-decoration: none;
+    color: black;
+}
+
+
 
 /* Estilos para a paginação */
 .pagination {
