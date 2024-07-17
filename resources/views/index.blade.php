@@ -18,14 +18,45 @@
         </div>
     </form>
 
+    {{-- <button class="toggle-filters-btn" onclick="toggleFilters()">Filtro Avançado</button>
+
+    <!-- Filtro Avançado -->
+    <div class="advanced-filters" id="advancedFilters" style="display: none;">
+        <label for="genre">Gênero:</label>
+        <select id="genre">
+            <option value="acao">Ação</option>
+            <option value="aventura">Aventura</option>
+            <option value="rpg">RPG</option>
+            <!-- Outras opções -->
+        </select>
+        <label for="platform">Plataforma:</label>
+        <select id="platform">
+            <option value="pc">PC</option>
+            <option value="console">Console</option>
+            <option value="mobile">Mobile</option>
+            <!-- Outras opções -->
+        </select>
+        <button onclick="applyFilters()">Aplicar Filtros</button>
+    </div>
+
+
+    <script>
+        function toggleFilters() {
+            const filters = document.getElementById('advancedFilters');
+            filters.style.display = filters.style.display === 'none' ? 'block' : 'none';
+        }
+    </script> --}}
+
 
     <div class="games-grid">
         <!-- Exemplo de Card de Jogo -->
         @foreach($jogos as $jogo)
             <div class="game-card">
-                <img src="{{\App\Http\Controllers\JogoController::verificaCapa($jogo)}}" alt="Capa do jogo {{$jogo->nome}}">
-                <h2>{{$jogo->nome}}</h2>
-                <p>[{{$jogo->genero->genero}}] - {{$jogo->produtora->produtora}}</p>
+                <a href="{{route('home.detalhes',['jogo' => $jogo])}}">
+                    <img src="{{\App\Http\Controllers\JogoController::verificaCapa($jogo)}}" alt="Capa do jogo {{$jogo->nome}}">
+                    <h2>{{$jogo->nome}}</h2>
+                    <p>[{{$jogo->genero->genero}}] - {{$jogo->produtora->produtora}}</p>
+                </a>
                 @if(isset($_SESSION['usuario']))
                     <div class="actions">
                         @if($_SESSION['tipo'] == 'admin')
