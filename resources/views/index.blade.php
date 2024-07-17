@@ -3,7 +3,8 @@
 @section('titulo', 'Home')
 
 @section('conteudo')
-{{--    {{session_destroy()}}--}}
+
+
     <h1>Escolha seu jogo</h1>
     <form action="{{ route('home',['filtro' => $request->filtro]) }}" method="get" id="busca" autocomplete="on">
         Ordenar:
@@ -20,7 +21,7 @@
     <table class="listagem">
         @foreach($jogos as $jogo)
             <tr>
-                <td><img src="{{\App\Http\Controllers\JogoController::verificaCapa($jogo)}}" alt="capa do jogo"></td>
+                <td><img class="mini" src="{{\App\Http\Controllers\JogoController::verificaCapa($jogo)}}" alt="capa do jogo"></td>
                 <td>
                     <a href="{{route('home.detalhes',$jogo)}}"> {{$jogo->nome}}</a>
                     [{{$jogo->genero->genero}}]<br>

@@ -62,7 +62,7 @@ class UsuarioController extends Controller
             'tipo' => $request->input('tipo')
         ]);
 
-        return view('index');
+        return redirect()->route('home');
     }
 
 

@@ -12,8 +12,10 @@
 </head>
 <body>
 
-    <main id="corpo">
+    <header>
         @include('layouts._partials.topo')
+    </header>
+    <main id="corpo">
         @yield('conteudo')
     </main>
     <footer>
