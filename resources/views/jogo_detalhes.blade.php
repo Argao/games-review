@@ -5,7 +5,7 @@
 @section('conteudo')
     <h1>Detahes do jogo</h1>
     <div>
-        <img src="{{$capa}}">
+        <img src="{{$capa}}" alt="capa do jogo">
         <h2>{{$jogo->nome}}</h2>
         @if(isset($_SESSION['usuario']))
             @if( $_SESSION['tipo'] == 'admin')
@@ -15,7 +15,7 @@
                     <form id="delete_{{$jogo->id}}" action="{{ route('jogo.destroy', $jogo) }}" method="post">
                         @csrf
                         @method('delete')
-                        <button  onclick="confirmaDelete({{ $jogo->id }})" class='material-symbols-outlined'>delete</button>
+                        <input type="button"  onclick="confirmaDelete({{ $jogo->id }})" class='material-symbols-outlined' value="delete">
                     </form>
                 </div>
             @else

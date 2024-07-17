@@ -38,7 +38,7 @@
                             <form id="delete_{{$jogo->id}}" action="{{ route('jogo.destroy', $jogo) }}" method="post">
                                 @csrf
                                 @method('delete')
-                                <button  onclick="confirmaDelete({{ $jogo->id }})" class='material-symbols-outlined'>delete</button>
+                                <input type="button"  onclick="confirmaDelete({{ $jogo->id }})" class='material-symbols-outlined' value="delete">
                             </form>
                         </td>
                     @else
