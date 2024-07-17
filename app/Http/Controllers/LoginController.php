@@ -62,7 +62,7 @@ class LoginController extends Controller
         if(UsuarioController::testarHash($senha, $usuario->senha)){
 
             $_SESSION['nome'] = $usuario->nome;
-            $_SESSION['usuario'] = $usuario->usuario;
+            $_SESSION['usuario'] = $usuario->id;
             $_SESSION['tipo'] = $usuario->tipo;
 
             return redirect()->route('jogo.index');

@@ -5,7 +5,7 @@ use App\Http\Controllers\JogoController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/','App\Http\Controllers\HomeController@index')->name('home');
-Route::post('/','App\Http\Controllers\HomeController@index')->name('home');
+
 
 Route::get('/detalhes/{jogo}','App\Http\Controllers\HomeController@detalhes')->name('home.detalhes');
 
@@ -16,8 +16,7 @@ Route::get('/login/{erro?}','App\Http\Controllers\LoginController@index')->name(
 Route::post('/login','App\Http\Controllers\LoginController@autenticar')->name('login');
 
 
-Route::get('/usuario/create','App\Http\Controllers\UsuarioController@create')->name('usuario.create');
-Route::post('/usuario/store','App\Http\Controllers\UsuarioController@store')->name('usuario.store');
+
 
 
 Route::middleware('login')->prefix('/app')->group(function () {
@@ -25,7 +24,7 @@ Route::middleware('login')->prefix('/app')->group(function () {
     Route::get('/sair', 'App\Http\Controllers\LoginController@sair')->name('app.sair');
 
     Route::get('/usuario/edit/{id}','App\Http\Controllers\UsuarioController@edit')->name('usuario.edit');
-    Route::put('/usuario/update/{id}','App\Http\Controllers\UsuarioController@update')->name('usuario.update');
+    Route::put('/usuario/update/{usuario}','App\Http\Controllers\UsuarioController@update')->name('usuario.update');
     Route::get('/sair', 'App\Http\Controllers\LoginController@sair')->name('app.sair');
 
     Route::get('/jogo','App\Http\Controllers\JogoController@index')->name('jogo.index');
@@ -34,6 +33,10 @@ Route::middleware('login')->prefix('/app')->group(function () {
 
 
     Route::middleware('admin')->group(function () {
+        Route::get('/usuario/create','App\Http\Controllers\UsuarioController@create')->name('usuario.create');
+        Route::post('/usuario/store','App\Http\Controllers\UsuarioController@store')->name('usuario.store');
+
+
         Route::delete('/usuario/destroy/{id}','App\Http\Controllers\UsuarioController@destroy')->name('usuario.destroy');
 
         Route::get('/jogo/create','App\Http\Controllers\JogoController@create')->name('jogo.create');

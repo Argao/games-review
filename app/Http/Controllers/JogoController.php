@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Genero;
 use App\Models\Jogo;
 use App\Models\Produtora;
+use App\Models\Usuario;
 use Illuminate\Http\Request;
 
 class JogoController extends Controller
@@ -25,7 +26,7 @@ class JogoController extends Controller
     {
         $generos = Genero::all();
         $produtoras = Produtora::all();
-        return view('sistema.jogo.create',['generos' => $generos, 'produtoras' => $produtoras]);
+        return view('app.jogo.create',['generos' => $generos, 'produtoras' => $produtoras]);
     }
 
     /**

@@ -79,15 +79,49 @@ class UsuarioController extends Controller
      */
     public function edit(string $id)
     {
-        //
+        $usuario = Usuario::find($id);
+        return view('app.usuario.edit',['usuario' => $usuario]);
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(Request $request, Usuario $usuario)
     {
-        //
+
+        $regras = [
+            'nome' => 'required|min:3|max:100',
+            'usuario' => 'required',
+            'tipo' => 'required'
+        ];
+
+        $senha = $usuario->senha;
+        if ($request->input('senha') != '') {
+            $regras['senha'] = 'min:6|max:20';
+            $regras['senha_confirmation'] = 'same:senha';
+            $senha = UsuarioController::gerarHash($request->input('senha')) ;
+        }
+
+        $feedback = [
+            'required' => 'O campo :attribute deve ser preenchido',
+            'nome.min' => 'O campo nome deve ter no mínimo 3 caracteres',
+            'nome.max' => 'O campo nome deve ter no máximo 100 caracteres',
+            'senha.min' => 'A senha deve ter no mínimo 6 caracteres',
+            'senha.max' => 'A senha deve ter no máximo 20 caracteres',
+            'senha_confirmation.same' => 'As senhas não são iguais',
+            'tipo.required' => 'O campo tipo deve ser preenchido'
+        ];
+
+        $request->validate($regras, $feedback);
+        $usuario->nome = $request->input('nome');
+        $usuario->usuario = $request->input('usuario');
+        $usuario->senha = $senha;
+        $usuario->tipo = $request->input('tipo');
+
+        $usuario->save();
+
+
+        return view('app.usuario.edit',['usuario' => $usuario]);
     }
 
     /**
