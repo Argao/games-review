@@ -5,48 +5,20 @@
 @section('conteudo')
 
     <form class="title-section" action="{{ route('home') }}" method="get" id="busca-form" autocomplete="on">
-        <h1>Escolha seu jogo</h1>
-        <div class="filters">
-            <select id="filtro-select" name="filtro">
+
+        <div class="search-bar">
+            <label class="label-filtro" for="filter-options">Filtrar por:</label>
+            <select id="filter-options" name="filtro">
                 <option value="n" {{$request->filtro == 'n' ? 'selected' : ''}}>Nome</option>
                 <option value="p" {{$request->filtro == 'p' ? 'selected' : ''}}>Produtora</option>
                 <option value="n1" {{$request->filtro == 'n1' ? 'selected' : ''}}>Nota Alta</option>
                 <option value="n2" {{$request->filtro == 'n2' ? 'selected' : ''}}>Nota Baixa</option>
             </select>
-            <input type="text" placeholder="Buscar..." name="busca" id="busca_txt" value="{{$request->busca}}" size="10" maxlength="40" autocomplete="on">
-            <button type="submit">Buscar</button>
+            <input type="text" placeholder="Buscar..." name="busca" id="search-input" value="{{$request->busca}}" size="10" maxlength="40" autocomplete="on">
+            <button id="search-button"><i class="fas fa-search"></i> Buscar</button>
+
         </div>
     </form>
-
-    {{-- <button class="toggle-filters-btn" onclick="toggleFilters()">Filtro Avançado</button>
-
-    <!-- Filtro Avançado -->
-    <div class="advanced-filters" id="advancedFilters" style="display: none;">
-        <label for="genre">Gênero:</label>
-        <select id="genre">
-            <option value="acao">Ação</option>
-            <option value="aventura">Aventura</option>
-            <option value="rpg">RPG</option>
-            <!-- Outras opções -->
-        </select>
-        <label for="platform">Plataforma:</label>
-        <select id="platform">
-            <option value="pc">PC</option>
-            <option value="console">Console</option>
-            <option value="mobile">Mobile</option>
-            <!-- Outras opções -->
-        </select>
-        <button onclick="applyFilters()">Aplicar Filtros</button>
-    </div>
-
-
-    <script>
-        function toggleFilters() {
-            const filters = document.getElementById('advancedFilters');
-            filters.style.display = filters.style.display === 'none' ? 'block' : 'none';
-        }
-    </script> --}}
-
 
     <div class="games-grid">
         <!-- Exemplo de Card de Jogo -->
@@ -60,12 +32,14 @@
                 @if(isset($_SESSION['usuario']))
                     <div class="actions">
                         @if($_SESSION['tipo'] == 'admin')
-                            <button class="add-btn"><a href='{{route('jogo.create')}}'>+</a></button>
-                            <button class="edit-btn"><a href='{{route('jogo.edit',$jogo)}}'>✎</a></button>
-                            <form id="delete_{{$jogo->id}}" action="{{ route('jogo.destroy', $jogo) }}" method="post">
+                            <button class=""><a href='{{route('jogo.create')}}' class="material-symbols-outlined add-btn btn-jogo">add_circle</a></button>
+                            <button class=""><a href='{{route('jogo.edit',$jogo)}}' class="material-symbols-outlined edit-btn btn-jogo">edit</a></button>
+                            <form id="delete_{{$jogo->id}}" action="{{ route('jogo.destroy', $jogo) }}" method="post" onsubmit="return confirmaDelete()">
                                 @csrf
                                 @method('delete')
-                                <input class="delete-btn" type="button"  onclick="confirmaDelete({{ $jogo->id }})" value="🗑" >
+                                <button class="botao-delete" >
+                                    <span class="material-symbols-outlined delete-btn btn-jogo">delete</span>
+                                </button>
                             </form>
                         @else
                             <button class="edit-btn"><a href='{{route('jogo.edit',$jogo)}}'>✎</a></button>
@@ -79,8 +53,8 @@
     <div >
         {{$jogos->appends($request->all())->links('pagination::bootstrap-4')}}
         <br>
-        Exibindo {{$jogos->count()}} jogos de {{$jogos->total()}} (de {{$jogos->firstItem()}}
-        a {{$jogos->lastItem()}})
+{{--        Exibindo {{$jogos->count()}} jogos de {{$jogos->total()}} (de {{$jogos->firstItem()}}--}}
+{{--        a {{$jogos->lastItem()}})--}}
     </div>
 
 @endsection

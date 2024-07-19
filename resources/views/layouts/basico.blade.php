@@ -5,8 +5,10 @@
     <meta name="viewport"
           content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <link rel="stylesheet" href="{{asset('css/basico.css')}}">
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200"/>
+    <link rel="stylesheet" href="{{asset('css/basico.css')}}">
     <title>@yield('titulo')</title>
 
 </head>
@@ -18,7 +20,7 @@
     <main id="corpo">
         @yield('conteudo')
     </main>
-    <footer>
+    <footer class="footer">
         @include('layouts._partials.footer')
     </footer>
     <script src="{{asset('js/view.js')}}"></script>
