@@ -82,7 +82,7 @@ class JogoController extends Controller
 
         $jogo->save();
 
-        return redirect()->route('jogo.index');
+        return redirect()->back()->with('success', 'Jogo cadastrado com sucesso');
     }
 
     /**
