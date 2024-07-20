@@ -175,7 +175,8 @@ class JogoController extends Controller
         }
 
         $jogo->delete();
-        return redirect()->route('jogo.index');
+//        return redirect()->route('jogo.index');
+        return back();
     }
 
     public static function verificaCapa(Jogo $jogo)

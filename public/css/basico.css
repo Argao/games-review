@@ -41,7 +41,8 @@ a {
     font-size: 1.1em;
 }
 
-.logo {
+.logo a{
+    color: white;
     float: left;
     margin-left: 1em;
     font-size: 1.5em;
@@ -175,7 +176,7 @@ a {
 }
 
 .btn-jogo:hover {
-    transform: scale(1.05);
+    transform: scale(1.5);
 }
 
 .game-card:hover {

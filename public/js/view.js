@@ -23,6 +23,6 @@ document.addEventListener('DOMContentLoaded', function() {
 });
 
 function confirmaDelete() {
-    return confirm('Deseja realmente realizar a busca?');
+    return confirm('Tem certeza que deseja apagar o jogo?');
 }
 
