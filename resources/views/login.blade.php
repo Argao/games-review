@@ -1,29 +1,36 @@
-<!doctype html>
-<html lang="pt-br">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport"
-          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <link rel="stylesheet" href="{{asset('css/basico.css')}}">
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200"/>
-    <title>Login</title>
-</head>
-<body>
+@extends('layouts.basico')
 
-<main id="corpo">
-    <form action="{{route('login')}}" method="post">
-        @csrf
-        <label for="usuario">Usuario</label>
-        <input type="text" name="usuario" id="usuario">
-        <label for="senha">Senha</label>
-        <input type="password" name="senha" id="senha">
-        <button type="submit">Entrar</button>
-    </form>
-</main>
-<footer>
-    @include('layouts._partials.footer')
-</footer>
-<script src="{{asset('js/view.js')}}"></script>
-</body>
-</html>
+@section('titulo', 'Login')
+
+@section('conteudo')
+    <div class="login-container">
+        <div class="login-form">
+            <h2>Login</h2>
+            <!-- Mensagem de Sucesso -->
+            @if (session('success'))
+                <div class="success-message" id="success-message">
+                    {{ session('success') }}
+                </div>
+            @endif
+            <!-- Mensagem de Erro -->
+            @if ($errors->any())
+                <div class="error-message">
+                    {{ $errors->first() }}
+                </div>
+            @endif
+            <form method="POST" action="{{ route('login') }}">
+                @csrf
+                <div class="form-group">
+                    <label for="usuario">Login</label>
+                    <input type="text" id="usuario" name="usuario" required>
+                </div>
+                <div class="form-group">
+                    <label for="senha">Senha</label>
+                    <input type="password" id="senha" name="senha" required>
+                </div>
+                <button type="submit" class="btn-submit">Entrar</button>
+            </form>
+        </div>
+    </div>
+@endsection
+

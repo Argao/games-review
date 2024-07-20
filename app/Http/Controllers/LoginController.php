@@ -25,7 +25,7 @@ class LoginController extends Controller
         }
 
 
-        return view('login',['titulo' => 'Login', 'erro' => $erro]);
+        return view('login',['erro' => $erro]);
     }
 
     public function autenticar(Request $request)
@@ -55,22 +55,15 @@ class LoginController extends Controller
 
         $usuario = $user->where('usuario', $usuario)->get()->first();
 
-        if(!$usuario){
-            return redirect()->route('login', ['erro' => 1]);
+        if (!$usuario || !UsuarioController::testarHash($senha, $usuario->senha)) {
+            return redirect()->route('login')->withErrors(['login_error' => 'Usuário ou senha inválidos.']);
         }
 
-        if(UsuarioController::testarHash($senha, $usuario->senha)){
+        $_SESSION['nome'] = $usuario->nome;
+        $_SESSION['usuario'] = $usuario->id;
+        $_SESSION['tipo'] = $usuario->tipo;
 
-            $_SESSION['nome'] = $usuario->nome;
-            $_SESSION['usuario'] = $usuario->id;
-            $_SESSION['tipo'] = $usuario->tipo;
-
-            return redirect()->route('jogo.index');
-        }
-
-        return redirect()->route('login', ['erro' => 1]);
-
-
+        return redirect()->route('jogo.index');
     }
 
     public function sair()
