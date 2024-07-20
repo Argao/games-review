@@ -1,6 +1,6 @@
-/* Estilos gerais */
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap'); /* Estilos gerais */
 body {
-    font-family: Arial, sans-serif;
+    font-family: 'Roboto', sans-serif;
     margin: 0;
     padding: 0;
     background-color: #f4f4f4;
@@ -469,3 +469,106 @@ a {
     opacity: 1;
 }
 
+
+/* Estilos para os detalhes do jogo */
+.details-container {
+    max-width: 1000px;
+    margin: 2em auto;
+    padding: 2em;
+    background-color: #fff;
+    border-radius: 12px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+}
+
+.details-container h2 {
+    text-align: center;
+    margin-bottom: 1.5em;
+    color: black;
+    font-weight: bolder;
+    font-size: 2.5em;
+}
+
+.game-details {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 2em;
+    align-items: center;
+}
+
+.game-image {
+    flex: 1;
+    max-width: 400px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.game-image img {
+    max-width: 100%;
+    border-radius: 12px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+}
+
+.game-info {
+    flex: 2;
+}
+
+.game-info h3 {
+    font-size: 2em;
+    margin-bottom: 0.5em;
+    color: #333; /* Cor destacada para o título */
+}
+
+.game-info p {
+    font-size: 1.2em;
+    margin-bottom: 0.5em;
+    color: #555;
+}
+
+.game-description {
+    margin-top: 1em;
+    font-size: 1.1em;
+    line-height: 1.6em;
+    color: #666;
+}
+
+.action-buttons {
+    margin-top: 2em;
+    display: flex;
+    gap: 1em;
+    justify-content: center;
+}
+
+.action-buttons .btn-jogo {
+    border: none;
+    background-color: transparent; /* Azul */
+
+    padding: 0.5em 1em;
+    border-radius: 4px;
+    font-size: 1.2em;
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.3s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.action-buttons .btn-jogo:hover {
+    background-color: #1565c0; /* Azul escuro */
+    transform: scale(1.05);
+}
+
+.action-buttons .btn-jogo .material-symbols-outlined {
+    font-size: 1.5em;
+}
+
+@media (max-width: 768px) {
+    .game-details {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .game-image, .game-info {
+        max-width: 100%;
+    }
+}

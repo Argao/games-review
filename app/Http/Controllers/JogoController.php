@@ -167,7 +167,7 @@ class JogoController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Jogo $jogo)
+    public function destroy(Jogo $jogo, Request $request)
     {
         $caminhoImagem = public_path('img/' . $jogo->capa);
         if (file_exists($caminhoImagem)) {
@@ -176,7 +176,12 @@ class JogoController extends Controller
 
         $jogo->delete();
 //        return redirect()->route('jogo.index');
-        return back();
+        $origem = $request->query('origem');
+        if ($origem === 'detalhes') {
+            return redirect()->route('jogo.index');
+        } else {
+            return back();
+        }
     }
 
     public static function verificaCapa(Jogo $jogo)
