@@ -1,5 +1,5 @@
 <nav>
-    <div class="logo"><a href="{{ route('home') }}">GameChoice </a> </div>
+    <div class="logo"><a href="{{ route('home') }}">GamesReview</a> </div>
     <ul class="nav-links">
     @if(isset($_SESSION['usuario']))
         <li><a href="{{route('usuario.edit',['id' => $_SESSION['usuario']])}}">Meus Dados</a></li> |
