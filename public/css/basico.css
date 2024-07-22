@@ -342,6 +342,16 @@ a {
     min-height: 100px;
 }
 
+.form-group p {
+    padding: 0.8em;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    background-color: #e9ecef;
+    font-size: 1em;
+    margin: 0;
+}
+
+
 .btn-submit {
     display: block;
     width: 100%;

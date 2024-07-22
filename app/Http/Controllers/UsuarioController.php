@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Usuario;
 use Illuminate\Http\Request;
+use Illuminate\Validation\Rule;
 
 class UsuarioController extends Controller
 {
@@ -31,10 +32,13 @@ class UsuarioController extends Controller
     {
         $regras = [
             'nome' => 'required|min:3|max:100',
-            'usuario' => 'required',
+            'usuario' => 'required|unique:usuarios,usuario',
             'senha' => 'required|min:6|max:20',
             'senha_confirmation' => 'required|same:senha',
-            'tipo' => 'required'
+            'tipo' => [
+                'required',
+                Rule::in(['admin', 'editor'])
+            ]
 
         ];
 
@@ -46,14 +50,14 @@ class UsuarioController extends Controller
             'senha.min' => 'A senha deve ter no mínimo 6 caracteres',
             'senha.max' => 'A senha deve ter no máximo 20 caracteres',
             'senha_confirmation.same' => 'As senhas não são iguais',
-            'tipo.required' => 'O campo tipo deve ser preenchido'
+            'tipo.required' => 'O campo tipo deve ser preenchido',
+            'usuario.unique' => 'O usuário informado já existe',
+            'tipo.in' => 'O campo tipo deve ser admin ou editor'
         ];
 
         $request->validate($regras, $feedback);
 
         $senha = UsuarioController::gerarHash($request->get('senha')) ;
-
-        echo $senha;
 
         Usuario::create([
             'nome' => $request->input('nome'),
@@ -62,7 +66,7 @@ class UsuarioController extends Controller
             'tipo' => $request->input('tipo')
         ]);
 
-        return redirect()->route('home');
+        return redirect()->back()->with('success', 'Usuario cadastrado com sucesso');
     }
 
 
@@ -91,8 +95,6 @@ class UsuarioController extends Controller
 
         $regras = [
             'nome' => 'required|min:3|max:100',
-            'usuario' => 'required',
-            'tipo' => 'required'
         ];
 
         $senha = $usuario->senha;
@@ -109,19 +111,16 @@ class UsuarioController extends Controller
             'senha.min' => 'A senha deve ter no mínimo 6 caracteres',
             'senha.max' => 'A senha deve ter no máximo 20 caracteres',
             'senha_confirmation.same' => 'As senhas não são iguais',
-            'tipo.required' => 'O campo tipo deve ser preenchido'
         ];
 
         $request->validate($regras, $feedback);
         $usuario->nome = $request->input('nome');
-        $usuario->usuario = $request->input('usuario');
         $usuario->senha = $senha;
-        $usuario->tipo = $request->input('tipo');
 
         $usuario->save();
 
 
-        return view('app.usuario.edit',['usuario' => $usuario]);
+        return redirect()->back()->with('success', 'Usuario cadastrado com sucesso')->with('usuario', $usuario);
     }
 
     /**

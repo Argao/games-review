@@ -161,7 +161,7 @@ class JogoController extends Controller
         }
 
         $jogo->save();
-        return redirect()->route('jogo.index');
+        return redirect()->back()->with('success', 'Jogo atualizado com sucesso')->with('jogo', $jogo);
     }
 
     /**
