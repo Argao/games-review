@@ -11,7 +11,8 @@ Route::get('/detalhes/{jogo}','App\Http\Controllers\HomeController@detalhes')->n
 
 Route::resource('jogo', 'App\Http\Controllers\JogoController');
 Route::resource('user', 'App\Http\Controllers\UserController');
-
+Route::resource('genero', 'App\Http\Controllers\GeneroController');
+Route::resource('produtora', 'App\Http\Controllers\ProdutoraController');
 
 Auth::routes();
 

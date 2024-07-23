@@ -32,8 +32,8 @@ class JogoController extends Controller
         if (auth()->user()->permission !== 'admin') return redirect()->route('home');
 
 
-        $generos = Genero::all();
-        $produtoras = Produtora::all();
+        $generos = Genero::orderBy('genero')->get();
+        $produtoras = Produtora::orderBy('produtora')->get();
         return view('app.jogo.create',['generos' => $generos, 'produtoras' => $produtoras]);
     }
 

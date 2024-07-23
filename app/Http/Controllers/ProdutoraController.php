@@ -8,6 +8,11 @@ use Illuminate\Http\Request;
 
 class ProdutoraController extends Controller
 {
+
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
     /**
      * Display a listing of the resource.
      */
@@ -21,7 +26,7 @@ class ProdutoraController extends Controller
      */
     public function create()
     {
-        $paises = Pais::all();
+        $paises = Pais::orderBy('nome')->get();
         return view('app.produtora.create', ['paises' => $paises]);
     }
 
@@ -31,19 +36,22 @@ class ProdutoraController extends Controller
     public function store(Request $request)
     {
         $regras =[
-            'nome' => 'required|max:50',
+            'produtora' => 'required|max:50|unique:produtoras,produtora',
             'pais_id' => 'required|exists:paises,id',
         ];
 
         $feedback = [
-            'nome.required' => 'O campo nome é obrigatório',
-            'nome.max' => 'O campo nome deve ter no máximo 50 caracteres',
-            'pais_id.required' => 'O campo país é obrigatório',
+            'required' => 'O campo :attribute deve ser preenchido',
+            'produtora.max' => 'O campo produtora deve ter no máximo 50 caracteres',
+            'produtora.unique' => 'Essa produtora já está cadastrada',
             'pais_id.exists' => 'O país informado não existe',
         ];
 
         $request->validate($regras, $feedback);
-        return redirect()->route('produtora.create');
+
+        Produtora::create($request->all());
+
+        return redirect()->back()->with('success', 'Produtora cadastrada com sucesso');
     }
 
     /**

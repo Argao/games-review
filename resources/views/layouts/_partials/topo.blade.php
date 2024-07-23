@@ -6,6 +6,8 @@
         @if(auth()->user()->permission == 'admin')
             <li><a href="{{route('user.create')}}"> Novo usuário</a></li> |
             <li><a href="{{ route('jogo.create') }}">Novo Jogo</a></li> |
+            <li><a href="{{ route('produtora.create') }}">Nova Produtora</a></li> |
+            <li><a href="{{ route('genero.create') }}">Novo Gênero</a></li> |
         @endif
         <li>
                 <a class="dropdown-item" href="{{ route('logout') }}" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">

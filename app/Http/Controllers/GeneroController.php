@@ -20,7 +20,7 @@ class GeneroController extends Controller
      */
     public function create()
     {
-        return view('genero.create');
+        return view('app.genero.create');
     }
 
     /**
@@ -29,17 +29,19 @@ class GeneroController extends Controller
     public function store(Request $request)
     {
         $regras = [
-            'nome' => 'required|max:30',
+            'genero' => 'required|max:30|unique:generos,genero',
         ];
 
         $feedback = [
             'required' => 'O campo :attribute deve ser preenchido',
-            'nome.max' => 'O campo nome deve ter no máximo 30 caracteres',
+            'genero.max' => 'O campo nome deve ter no máximo 30 caracteres',
         ];
 
         $request->validate($regras, $feedback);
 
-        return redirect()->route('genero.create');
+        Genero::create($request->all());
+
+        return redirect()->back()->with('success', 'Gênero cadastrado com sucesso');
     }
 
     /**
