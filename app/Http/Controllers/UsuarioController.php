@@ -31,7 +31,7 @@ class UsuarioController extends Controller
     public function store(Request $request)
     {
         $regras = [
-            'nome' => 'required|min:3|max:100',
+            'nome' => 'required|string|max:100',
             'usuario' => 'required|unique:usuarios,usuario',
             'senha' => 'required|min:6|max:20',
             'senha_confirmation' => 'required|same:senha',
@@ -44,15 +44,6 @@ class UsuarioController extends Controller
 
         $feedback = [
 
-            'required' => 'O campo :attribute deve ser preenchido',
-            'nome.min' => 'O campo nome deve ter no mínimo 3 caracteres',
-            'nome.max' => 'O campo nome deve ter no máximo 100 caracteres',
-            'senha.min' => 'A senha deve ter no mínimo 6 caracteres',
-            'senha.max' => 'A senha deve ter no máximo 20 caracteres',
-            'senha_confirmation.same' => 'As senhas não são iguais',
-            'tipo.required' => 'O campo tipo deve ser preenchido',
-            'usuario.unique' => 'O usuário informado já existe',
-            'tipo.in' => 'O campo tipo deve ser admin ou editor'
         ];
 
         $request->validate($regras, $feedback);

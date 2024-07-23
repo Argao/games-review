@@ -15,9 +15,9 @@
                 <p><strong>Desenvolvedora:</strong> {{ $jogo->produtora->produtora }}</p>
                 <p><strong>Nota:</strong> {{ $jogo->nota }}</p>
                 <div class="game-description">{{ $jogo->descricao }}</div>
-                @if(isset($_SESSION['usuario']))
+                @if(auth()->check())
                     <div class="action-buttons">
-                        @if($_SESSION['tipo'] == 'admin')
+                        @if(auth()->user()->permission == 'admin')
                             <button class="btn-jogo">
                                 <a href='{{ route('jogo.create') }}' class="material-symbols-outlined add-btn">add_circle</a>
                             </button>

@@ -12,22 +12,22 @@
             </div>
         @endif
 
-        <form method="post" action="{{route('usuario.store')}}">
+        <form method="post" action="{{route('user.store')}}">
             @csrf
 
             <div class="form-group">
                 <label for="nome">Nome:</label>
-                <input type="text" name="nome" id="nome" size="40" maxlength="40" required>
+                <input type="text" name="nome" id="nome" size="40" maxlength="40" required >
                 @if ($errors->has('nome'))
                     <span class="error-message">{{ $errors->first('nome') }}</span>
                 @endif
             </div>
 
             <div class="form-group">
-                <label for="usuario">Usuario:</label>
-                <input type="text" name="usuario" id="usuario"  required>
-                @if ($errors->has('usuario'))
-                    <span class="error-message">{{ $errors->first('usuario') }}</span>
+                <label for="email">Email:</label>
+                <input id="email" type="email" name="email" value="{{ old('email') }}" required autocomplete="email">
+                @if ($errors->has('email'))
+                    <span class="error-message">{{ $errors->first('email') }}</span>
                 @endif
             </div>
 

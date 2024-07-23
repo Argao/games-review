@@ -10,6 +10,11 @@ use Illuminate\Http\Request;
 
 class JogoController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
+
     /**
      * Display a listing of the resource.
      */
@@ -24,6 +29,9 @@ class JogoController extends Controller
      */
     public function create()
     {
+        if (auth()->user()->permission !== 'admin') return redirect()->route('home');
+
+
         $generos = Genero::all();
         $produtoras = Produtora::all();
         return view('app.jogo.create',['generos' => $generos, 'produtoras' => $produtoras]);
@@ -34,6 +42,7 @@ class JogoController extends Controller
      */
     public function store(Request $request)
     {
+        if (auth()->user()->permission !== 'admin') return redirect()->route('home');
         $regras = [
             'nome' => 'required|min:3|max:100',
             'capa' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
@@ -169,6 +178,7 @@ class JogoController extends Controller
      */
     public function destroy(Jogo $jogo, Request $request)
     {
+        if (auth()->user()->permission !== 'admin') return redirect()->route('home');
         $caminhoImagem = public_path('img/' . $jogo->capa);
         if (file_exists($caminhoImagem)) {
             unlink($caminhoImagem);
@@ -190,4 +200,5 @@ class JogoController extends Controller
         $imagemPadrao = 'img/indisponivel.png';
         return file_exists(public_path($caminhoImagem)) ? asset($caminhoImagem) : asset($imagemPadrao);
     }
+
 }

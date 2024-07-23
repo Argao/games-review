@@ -29,9 +29,9 @@
                     <h2>{{$jogo->nome}}</h2>
                     <p>[{{$jogo->genero->genero}}] - {{$jogo->produtora->produtora}}</p>
                 </a>
-                @if(isset($_SESSION['usuario']))
+                @if(auth()->check())
                     <div class="actions">
-                        @if($_SESSION['tipo'] == 'admin')
+                        @if(auth()->user()->permission == 'admin')
                             <button class=""><a href='{{route('jogo.create')}}' class="material-symbols-outlined add-btn btn-jogo">add_circle</a></button>
                             <button class=""><a href='{{route('jogo.edit',$jogo)}}' class="material-symbols-outlined edit-btn btn-jogo">edit</a></button>
                             <form id="delete_{{$jogo->id}}" action="{{ route('jogo.destroy', $jogo) }}" method="post" onsubmit="return confirmaDelete()">
@@ -42,7 +42,7 @@
                                 </button>
                             </form>
                         @else
-                            <button class="edit-btn"><a href='{{route('jogo.edit',$jogo)}}'>✎</a></button>
+                            <button class=""><a href='{{route('jogo.edit',$jogo)}}' class="material-symbols-outlined edit-btn btn-jogo">edit</a></button>
                         @endif
                     </div>
                 @endif

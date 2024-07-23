@@ -9,10 +9,7 @@ class HomeController extends Controller
 {
     public function index(Request $request)
     {
-        //inicia a sessão
-        session_start();
 
-        //recupera o filtro e a busca
         $filtro = $request->input('filtro');//filtro de busca
         $busca = $request->input('busca');//string a ser buscada
 
@@ -54,8 +51,6 @@ class HomeController extends Controller
 
     public function detalhes(Jogo $jogo)
     {
-        //verifica se a imagem da capa existe
-        session_start();
         $imagem =  JogoController::verificaCapa($jogo);
         return view('jogo_detalhes',['jogo' => $jogo,'capa' => $imagem]);
     }

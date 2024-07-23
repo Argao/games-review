@@ -13,21 +13,21 @@
             </div>
         @endif
 
-        <form method="post" action="{{route('usuario.update',['usuario' =>$usuario])}}">
+        <form method="post" action="{{route('user.update',['user' => $usuario])}}">
             @method('PUT')
             @csrf
 
             <div class="form-group">
                 <label for="nome">Nome:</label>
-                <input type="text" name="nome" id="nome" size="40" maxlength="40" value="{{$usuario->nome}}" required>
+                <input type="text" name="nome" id="nome" size="40" maxlength="40" value="{{$usuario->name}}" required>
                 @if ($errors->has('nome'))
                     <span class="error-message">{{ $errors->first('nome') }}</span>
                 @endif
             </div>
 
             <div class="form-group">
-                <label for="usuario">Usuario:</label>
-                <p id="usuario">{{$usuario->usuario}}</p>
+                <label for="email">Email:</label>
+                <p id="Email">{{$usuario->email}}</p>
             </div>
 
             <div class="form-group">
@@ -48,7 +48,7 @@
 
             <div class="form-group">
                 <label for="tipo">Tipo:</label>
-                <p id="tipo">{{$usuario->tipo}}</p>
+                <p id="tipo">{{$usuario->permission}}</p>
             </div>
 
             <button type="submit" class="btn-submit">Salvar</button>
