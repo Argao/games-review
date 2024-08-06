@@ -5,8 +5,8 @@ namespace App\Http\Controllers;
 use App\Models\Genero;
 use App\Models\Jogo;
 use App\Models\Produtora;
-use App\Models\Usuario;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 
 class JogoController extends Controller
 {
@@ -85,8 +85,8 @@ class JogoController extends Controller
 
         if ($request->hasFile('capa')) {
             $imageName = time().'.'.$request->capa->extension();
-            $request->capa->move(public_path('img'), $imageName);
-            $jogo->capa = $imageName;
+            $caminhoImagem = $request->file('capa')->storeAs('capas/', $imageName, 's3');
+            $jogo->capa = $caminhoImagem;
         }
 
         $jogo->save();
@@ -160,13 +160,12 @@ class JogoController extends Controller
 
         if ($request->hasFile('capa')) {
             $imageName = time().'.'.$request->capa->extension();
-            $request->capa->move(public_path('img'), $imageName);
-            $caminhoImagem = public_path('img/' . $jogo->capa);
+            $caminhoImagem = $request->file('capa')->storeAs('capas/', $imageName, 's3');
 
-            if (file_exists($caminhoImagem)) {
-                unlink($caminhoImagem);
+            if (Storage::disk('s3')->exists('capas/' . $jogo->capa)) {
+                Storage::disk('s3')->delete('capas/' . $jogo->capa);
             }
-            $jogo->capa = $imageName;
+            $jogo->capa = $caminhoImagem;
         }
 
         $jogo->save();
@@ -196,9 +195,9 @@ class JogoController extends Controller
 
     public static function verificaCapa(Jogo $jogo)
     {
-        $caminhoImagem = 'img/' . $jogo->capa;
+        $caminhoImagem =  $jogo->capa;
         $imagemPadrao = 'img/indisponivel.png';
-        return file_exists(public_path($caminhoImagem)) ? asset($caminhoImagem) : asset($imagemPadrao);
+        return Storage::disk('s3')->exists($caminhoImagem) ? Storage::disk('s3')->url($caminhoImagem) : asset($imagemPadrao);
     }
 
 }
