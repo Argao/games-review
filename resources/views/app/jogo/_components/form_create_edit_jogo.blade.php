@@ -1,7 +1,6 @@
 
 @csrf
 
-
 <div class="form-group">
     <label for="nome">Nome</label>
     <input value="{{$jogo->nome ?? old('nome')}}"  type="text" name="nome" id="nome" required>
@@ -58,7 +57,7 @@
     @if(isset($jogo->capa))
         <div>
             <label>Capa Atual do Jogo:</label>
-            <img src="{{ asset('img/' . $jogo->capa) }}" alt="Capa do Jogo" style="width: 100px; height: auto;">
+            <img src="{{ Storage::disk('s3')->url($jogo->capa) }}" alt="Capa do Jogo" style="width: 100px; height: auto;">
         </div>
     @endif
 

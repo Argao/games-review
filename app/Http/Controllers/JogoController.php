@@ -85,7 +85,7 @@ class JogoController extends Controller
 
         if ($request->hasFile('capa')) {
             $imageName = time().'.'.$request->capa->extension();
-            $caminhoImagem = $request->file('capa')->storeAs('capas/', $imageName, 's3');
+            $caminhoImagem = $request->file('capa')->storeAs('capas', $imageName, 's3');
             $jogo->capa = $caminhoImagem;
         }
 
@@ -160,10 +160,10 @@ class JogoController extends Controller
 
         if ($request->hasFile('capa')) {
             $imageName = time().'.'.$request->capa->extension();
-            $caminhoImagem = $request->file('capa')->storeAs('capas/', $imageName, 's3');
+            $caminhoImagem = $request->file('capa')->storeAs('capas', $imageName, 's3');
 
-            if (Storage::disk('s3')->exists('capas/' . $jogo->capa)) {
-                Storage::disk('s3')->delete('capas/' . $jogo->capa);
+            if (Storage::disk('s3')->exists($jogo->capa)) {
+                Storage::disk('s3')->delete($jogo->capa);
             }
             $jogo->capa = $caminhoImagem;
         }
@@ -178,9 +178,10 @@ class JogoController extends Controller
     public function destroy(Jogo $jogo, Request $request)
     {
         if (auth()->user()->permission !== 'admin') return redirect()->route('home');
-        $caminhoImagem = public_path('img/' . $jogo->capa);
-        if (file_exists($caminhoImagem)) {
-            unlink($caminhoImagem);
+
+
+        if (Storage::disk('s3')->exists($jogo->capa)) {
+            Storage::disk('s3')->delete($jogo->capa);
         }
 
         $jogo->delete();
