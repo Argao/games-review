@@ -2,11 +2,14 @@
 
 namespace App\Http\Controllers;
 
+use App\Jobs\UploadImageToS3;
 use App\Models\Genero;
 use App\Models\Jogo;
 use App\Models\Produtora;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Storage;
+
 
 class JogoController extends Controller
 {
@@ -20,7 +23,7 @@ class JogoController extends Controller
      */
     public function index(Request $request)
     {
-        $jogos = Jogo::paginate(10);
+        $jogos = Jogo::with(['genero','produtora'])->paginate(10);
         return view('index',['jogos' => $jogos,'request'=>$request]);
     }
 
@@ -85,7 +88,7 @@ class JogoController extends Controller
 
         if ($request->hasFile('capa')) {
             $imageName = time().'.'.$request->capa->extension();
-            $caminhoImagem = $request->file('capa')->storeAs('capas', $imageName, 's3');
+            $caminhoImagem = UploadImageToS3::dispatch($request->capa, $imageName);
             $jogo->capa = $caminhoImagem;
         }
 
@@ -160,7 +163,7 @@ class JogoController extends Controller
 
         if ($request->hasFile('capa')) {
             $imageName = time().'.'.$request->capa->extension();
-            $caminhoImagem = $request->file('capa')->storeAs('capas', $imageName, 's3');
+            $caminhoImagem = UploadImageToS3::dispatch($request->capa, $imageName);
 
             if (Storage::disk('s3')->exists($jogo->capa)) {
                 Storage::disk('s3')->delete($jogo->capa);
@@ -194,11 +197,16 @@ class JogoController extends Controller
         }
     }
 
+
+
     public static function verificaCapa(Jogo $jogo)
     {
         $caminhoImagem =  $jogo->capa;
         $imagemPadrao = 'img/indisponivel.png';
-        return Storage::disk('s3')->exists($caminhoImagem) ? Storage::disk('s3')->url($caminhoImagem) : asset($imagemPadrao);
+
+        return Cache::remember('capa_jogo_'.$jogo->id, now()->addMinutes(5), function () use ($caminhoImagem, $imagemPadrao) {
+            return Storage::disk('s3')->exists($caminhoImagem) ? Storage::disk('s3')->url($caminhoImagem) : asset($imagemPadrao);
+        });
     }
 
 }
