@@ -44,7 +44,7 @@ class HomeController extends Controller
                 break;
         }
 
-        $jogos = $query->paginate(10);
+        $jogos = $query->paginate(8);
 
         return view('index', ['jogos' => $jogos,'request' => $request]);
     }

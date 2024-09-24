@@ -16,7 +16,6 @@
             </select>
             <input type="text" placeholder="Buscar..." name="busca" id="search-input" value="{{$request->busca}}" size="10" maxlength="40" autocomplete="on">
             <button id="search-button"><i class="fas fa-search"></i> Buscar</button>
-
         </div>
     </form>
 
